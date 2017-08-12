@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html { overflow-y: scroll; }
+            body { position: absolute; }
+            #towersMap {
+                width:100%;
+                min-width: 300px;
+                min-height: 400px;
+            }
+            .relative-div {
+                position: relative;
+            }
+            .legend {
+                background-color: #fff;
+                border-radius: 3px;
+                bottom: 30px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+                font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                padding: 10px;
+                position: absolute;
+                right: 10px;
+                z-index: 1;
+            }
+
+            .legend h4 {
+                margin: 0 0 10px;
+            }
+
+            .legend div span {
+                border-radius: 50%;
+                display: inline-block;
+                height: 10px;
+                margin-right: 5px;
+                width: 10px;
+        </style>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.3.1/r-2.1.1/datatables.min.css"/>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+
+        <!--<link hrf="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
+        <title>Mobile Towers</title>
+    </head>
+    <body>
+        <!--potentially add a nav bar if there's extra pages...-->
+        <!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+            <!--<div class="container-fluid">-->
+                <!--<div class="navbar-header">-->
+                    <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
+                        <!--<span class="sr-only">Toggle navigation</span>-->
+                        <!--<span class="icon-bar"></span>-->
+                        <!--<span class="icon-bar"></span>-->
+                        <!--<span class="icon-bar"></span>-->
+                    <!--</button>-->
+                    <!--<a class="navbar-brand" href="#">Mobile towers of london</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</nav>-->
+
+        <div class="container">
+
+            <div class="row">
+                <!--<div class="col-sm-3 col-md-2 sidebar">-->
+              <!--<ul class="nav nav-sidebar">-->
+                <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
+                <!--<li><a href="#">Reports</a></li>-->
+                <!--<li><a href="#">Analytics</a></li>-->
+                <!--<li><a href="#">Export</a></li>-->
+              <!--</ul>-->
+            <!--</div>-->
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                     <h1 class="page-header">Where are the mobile phone towers in London?</h1>
+
+                    <h5>Input bounding box coordinates in the form 'lng1,lat1,lng2,lat2' etc</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="coordinatesEntry">Coordinates</label>
+                            <input type="text" class="form-control" id="coordinatesEntry" placeholder="Enter coordinates">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="queryCoordsBtn">Show towers</button>
+                    </form>
+                    <h5>Towers Map</h5>
+                    <div class="relative-div">
+                    <div id='legend' class='legend'>
+                        <h4>Carriers</h4>
+                        <div><span style='background-color: #223b53'></span>3</div>
+                        <div><span style='background-color: #fbb03b'></span>EE</div>
+                        <div><span style='background-color: #e55e5e'></span>O2</div>
+                        <div><span style='background-color: #3bb2d0'></span>Vodafone</div>
+                        <div><span style='background-color: #ccc'></span>Others</div>
+                    </div>
+                    <div id="towersMap"></div>
+                    </div>
+
+
+
+                    <h2 class="sub-header">Towers Data table</h2>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="towersTable">
+                            </table>
+                         </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.3.1/r-2.1.1/datatables.min.js"></script>
+
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+        <script src="geojson-extent.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
