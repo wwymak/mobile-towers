@@ -1,6 +1,6 @@
 (function () {
     mapboxgl.accessToken = 'pk.eyJ1Ijoid3d5bWFrIiwiYSI6IkxEbENMZzgifQ.pxk3bdzd7n8h4pKzc9zozw';
-
+    //set up datatable
     let towersTable = $('#towersTable').DataTable( {
         data: [],
         columns: [
@@ -12,7 +12,7 @@
             {title: 'Network', data: 'network_name_mapped' },
         ]
     } );
-
+    // map setup
     let mapDisplay = new mapboxgl.Map({
         container: 'towersMap',
         style: 'mapbox://styles/mapbox/dark-v9',
@@ -20,6 +20,8 @@
         center: [-0.1424372, 51.501364]
     });
 
+    let queryBtn = $("#queryCoordsBtn");
+    // the map needs geojson input so turn the lnglat data into geojson
     let convertLngLatToGeojson = function (locationData) {
         let mainCarriers = ['EE', 'O2', '3', 'Vodafone'];
         let geojson = {
@@ -49,15 +51,15 @@
             data: geojsonData,
         });
 
-            //layers-- one for unclusterd points, one for lables and other for points
+        // hmm, might split the layers so that you can toggle different carrier's circles on and off
         map.addLayer({
             id: 'towerLocations',
             type: 'circle',
             source: 'locationData',
             paint: {
                 'circle-radius': {
-                    'base': 10,
-                    'stops': [[12, 2], [22, 180]]
+                    'base': 2,
+                    'stops': [[12, 5], [18, 8], [22, 180]]
                 },
 
                 // color circles by mobile carrier
@@ -76,9 +78,11 @@
 
     };
 
-    $("#queryCoordsBtn").on('click', e => {
+    //handle the
+    queryBtn.on('click', e => {
         e.preventDefault();
-        $("#queryCoordsBtn").text('Please wait');
+        queryBtn.text('Please wait');
+        queryBtn.prop('disabled', false);
         let coords = $("#coordinatesEntry").val().replace(/\s+/g, '');
         $.ajax({
             method: 'GET',
@@ -99,7 +103,8 @@
             let geojson = convertLngLatToGeojson(data);
             plotTowerMarkers(mapDisplay, geojson);
             mapDisplay.fitBounds(geojsonExtent(geojson), {padding: 20});
-            $("#queryCoordsBtn").text('Show towers');
+            queryBtn.text('Show towers');
+            queryBtn.prop('disabled', false);
         });
     });
 })();
