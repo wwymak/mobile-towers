@@ -16,7 +16,7 @@ module.exports = function (req, res) {
         }
         //make sure polygon is closed
         queryLngLatStr += `${lngLatArr[0]} ${lngLatArr[1]}`;
-        psqlQuery += `WHERE ST_Within(geom, ST_GeomFromText('POLYGON(($\{queryLngLatStr}))', 4326))`;
+        psqlQuery += `WHERE ST_Within(geom, ST_GeomFromText('POLYGON((${queryLngLatStr}))', 4326))`;
     }
     psqlQuery += 'GROUP BY network_name_mapped';
     if(sort && sort.toLowerCase() === 'asc') {
