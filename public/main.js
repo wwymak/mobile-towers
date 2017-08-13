@@ -19,7 +19,7 @@
         zoom: 12,
         center: [-0.1424372, 51.501364]
     });
-
+    mapDisplay.addControl(new mapboxgl.NavigationControl());
 
 
     let queryBtn = $("#queryCoordsBtn");
@@ -63,7 +63,8 @@
             paint: {
                 'circle-radius': {
                     'base': 2,
-                    'stops': [[12, 5], [18, 20], [22, 10]]
+                    // 'stops': [[5, 12], [20, 15], [2, 22]]
+                    'stops': [[2, 2], [12, 4], [15, 20], [20, 80]]
                 },
 
                 // color circles by mobile carrier
