@@ -24,7 +24,6 @@ module.exports = function (req, res) {
 
     db.any(psqlQuery, [true])
         .then(data => {
-            console.log('okay')
             res.json(data);
         })
         .catch(error => {

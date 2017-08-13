@@ -12,10 +12,11 @@ more ideas/ to do:
 - more dataviz around e.g. which operator has most towers (from DB I know that it's EE)
 , confidences, and which towers have the most reported users -- presumably these are more 'important' then the very infrequently used ones?
 - where is your nearest tower? (with geolocation apis/ voronoi)
-- also give info when you hover over a data point on the map (best done with voronoi mouse event if possible...)
-- tweak map styling
-- tidy up the file structure for the nodes bits
+- tweak tooltip? (perhaps with voronoi mouse event if possible...)
+- tweak map styling?
+- tidy up the file structure
 - look into experimenting with reactjs
+- error handling
 
 ## File structure
 ```

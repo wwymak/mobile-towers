@@ -20,6 +20,8 @@
         center: [-0.1424372, 51.501364]
     });
 
+
+
     let queryBtn = $("#queryCoordsBtn");
     // the map needs geojson input so turn the lnglat data into geojson
     let convertLngLatToGeojson = function (locationData) {
@@ -35,7 +37,9 @@
                 "coordinates": [+d.est_lng, +d.est_lat]
             },
             "properties": {
-                network_name: mainCarriers.includes(d.network_name_mapped)? d.network_name_mapped: 'Other'
+                network_name: mainCarriers.includes(d.network_name_mapped)? d.network_name_mapped: 'Other',
+                description: `<p><strong>Network: </strong>${d.network_name_mapped}</p>
+                    <p><strong>Confidence: </strong>${d.confidence}</p><p><strong>Type: </strong>${d.is_lte? '4G': (d.is_3g? '3G': (d.is_2g? '2G': 'not known'))}</p>`
             }
         }));
         return geojson;
@@ -59,7 +63,7 @@
             paint: {
                 'circle-radius': {
                     'base': 2,
-                    'stops': [[12, 5], [18, 8], [22, 180]]
+                    'stops': [[12, 5], [18, 20], [22, 10]]
                 },
 
                 // color circles by mobile carrier
@@ -76,9 +80,26 @@
             }
         });
 
+        mapDisplay.on('click', 'towerLocations', function (e) {
+            new mapboxgl.Popup()
+                .setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.description)
+                .addTo(map);
+        });
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        mapDisplay.on('mouseenter', 'towerLocations', function () {
+            mapDisplay.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        mapDisplay.on('mouseleave', 'towerLocations', function () {
+            mapDisplay.getCanvas().style.cursor = '';
+        });
+
     };
 
-    //handle the
+    //handle the form submit event
     queryBtn.on('click', e => {
         e.preventDefault();
         queryBtn.text('Please wait');
@@ -95,13 +116,15 @@
                 lngLatString: coords
             }
         }).then(data => {
-
+            //update the datatable
             towersTable.clear();
             towersTable.rows.add(data);
             towersTable.draw();
 
+            //update the map
             let geojson = convertLngLatToGeojson(data);
             plotTowerMarkers(mapDisplay, geojson);
+            //zoom to fit all the markers
             mapDisplay.fitBounds(geojsonExtent(geojson), {padding: 20});
             queryBtn.text('Show towers');
             queryBtn.prop('disabled', false);

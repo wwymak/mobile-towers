@@ -36,6 +36,13 @@
                 height: 10px;
                 margin-right: 5px;
                 width: 10px;
+            }
+
+            .mapboxgl-popup {
+                max-width: 400px;
+                font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            }
+
         </style>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.3.1/r-2.1.1/datatables.min.css"/>
@@ -74,7 +81,7 @@
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                      <h1 class="page-header">Where are the mobile phone towers in London?</h1>
 
-                    <h5>Input bounding box coordinates in the form 'lng1,lat1,lng2,lat2' etc</h5>
+                    <h5>Input bounding box coordinates in the form 'lng1,lat1,lng2,lat2' (e.g. -1.53, 50.98, -1.42, 50.98, -1.42, 52.01, -1.53, 52.01)</h5>
                     <form>
                         <div class="form-group">
                             <label for="coordinatesEntry">Coordinates</label>
@@ -82,7 +89,8 @@
                         </div>
                         <button type="submit" class="btn btn-primary" id="queryCoordsBtn">Show towers</button>
                     </form>
-                    <h5>Towers Map</h5>
+                    <h3>Towers Map</h3>
+                    <div>Click on circles to see more info about that tower</div>
                     <div class="relative-div">
                     <div id='legend' class='legend'>
                         <h4>Carriers</h4>
@@ -97,7 +105,7 @@
 
 
 
-                    <h2 class="sub-header">Towers Data table</h2>
+                    <h3 class="sub-header">Towers Data table</h3>
                         <div class="table-responsive">
                             <table class="table table-striped" id="towersTable">
                             </table>
